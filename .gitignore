@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+.env/
+.venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Test and coverage
+htmlcov/
+.coverage
+.cache/
+pytest_cache/
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+
+# Misc
+*.swp
+*.bak
+*.tmp
+
+# Ignore local settings
+*.local
+
+# Ignore compiled files
+build/
+dist/
+*.egg-info/
+
+# Ignore secrets
+.env
+.env.*
+
+# Ignore Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Ignore node_modules (if using JS/TS)
+node_modules/
