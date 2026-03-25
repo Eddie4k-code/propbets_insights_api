@@ -5,8 +5,9 @@ class HitRateRepositoryInterface(ABC):
     Interface for hit rate repository.
     """
     @abstractmethod
-    def get_all_hit_rates(self) -> float:
+    def get_hit_rates_within_hours(self, hours: int) -> list:
         pass
 
-    def get_hit_rates_by_sport(self, sport: str) -> float:
+    @abstractmethod
+    def get_hot_props_within_hours(self, hours: int) -> list:
         pass

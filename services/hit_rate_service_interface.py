@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
-class HitRateRepositoryInterface(ABC):
+class HitRateServiceInterface(ABC):
     @abstractmethod
-    def get_all_hit_rates(self, url: str) -> float:
+    def get_nba_hit_rates_within_hours(self, hours: int) -> list:
         pass
-
