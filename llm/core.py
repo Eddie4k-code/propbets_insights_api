@@ -13,18 +13,21 @@ from db.postgres_db_connection import PostgresConnection
 
 load_dotenv()
 
+
+# Initialize the DB connection once at module load
+db_connection = PostgresConnection(connection_string=os.getenv("DATABASE_URL"))
+db_connection.initiate_connection()
+
 model = init_chat_model(model="gpt-4-turbo", model_provider="openai")
+
 
 @tool
 def get_hit_rates(sport: str) -> Dict:
     """
     Tool to retrieve hit rates for a specific sport.
     """
-    db = PostgresConnection(connection_string=os.getenv("DATABASE_URL"))
-    db.initiate_connection()
-
     if sport.lower() == "nba":
-        nba_hit_rate_repository = NBAHitRateRepository(db_connection=db)
+        nba_hit_rate_repository = NBAHitRateRepository(db_connection=db_connection)
         hit_rates = nba_hit_rate_repository.get_hit_rates_within_hours(hours=24)
         return {"hit_rates": hit_rates}
 
@@ -35,7 +38,8 @@ async def run_llm(query: str):
         "Always provide the following details for each prop bet: hit rate percentage, time frame of the data, and the price/odds of the prop. "
         "When giving game times or event times, always include every timezone. "
         "If the requested sport is not supported, clearly inform the user which sports are available. "
-        "Respond in a concise, accurate, and user-friendly manner, ensuring all information is up-to-date and relevant."
+        "Respond in a concise, accurate, and user-friendly manner, ensuring all information is up-to-date and relevant. "
+        "Always respond in plain text without any Markdown, code formatting, or unnecessary line breaks. Do not use \\n or special characters for formatting. Write your answers as clear, single-paragraph sentences suitable for direct display in a web UI."
     )
 
     agent = initialize_agent(

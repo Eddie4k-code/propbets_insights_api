@@ -18,6 +18,11 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+
+# Initialize the shared DB connection once
+db = PostgresConnection(connection_string=os.getenv("DATABASE_URL"))
+db.initiate_connection()
+
 app = FastAPI()
 
 # Add CORS middleware

@@ -19,8 +19,9 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-db = PostgresConnection(connection_string=os.getenv("DATABASE_URL"))
-db.initiate_connection()
+
+# Import the shared DB connection from main.py
+from main import db
 
 limiter = Limiter(key_func=lambda: "global")
 
@@ -69,5 +70,9 @@ async def ai_chat_bot(request: Request, query: Query):
     """
     Endpoint to handle AI chatbot queries.
     """
-    response = await run_llm(query)
-    return {"response": response}
+    try:
+        response = await run_llm(query.query)
+        return {"response": response}
+    except Exception as e:
+        logger.error(f"Error processing AI chatbot query: {e}")
+        return {"response": "An error occurred while processing your request. Please try again later."}
