@@ -11,13 +11,12 @@ from repositories.nba_pg_hit_rate_repository import NBAHitRateRepository
 from db.connection import db
 from db.postgres_db_connection import PostgresConnection
 from repositories.player_stats_repository import PGPlayerStatsRepository
+from langchain.memory import ConversationBufferMemory
+
 
 load_dotenv()
 
-
-
 model = init_chat_model(model="gpt-4-turbo", model_provider="openai")
-
 
 @tool
 def get_hit_rates(sport: str) -> Dict:
@@ -34,7 +33,6 @@ def get_player_stats(player_name: str, sport: str) -> Dict:
     """
     Tool to retrieve player stats for a specific player and sport.
     """
-
     player_stats_repository = PGPlayerStatsRepository(db_connection=db)
     stats = player_stats_repository.get_player_stats(player_name.lower(), sport)
     return {"player_stats": stats}
