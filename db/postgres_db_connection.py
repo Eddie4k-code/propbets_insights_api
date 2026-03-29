@@ -2,6 +2,7 @@ from db.initiate_db_connection_interface import InitiateConnectionInterface
 from psycopg2 import pool
 from contextlib import contextmanager
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -16,7 +17,7 @@ class PostgresConnection(InitiateConnectionInterface):
 
     def initiate_connection(self):
         self.pool = pool.SimpleConnectionPool(self.minconn, self.maxconn, self.connection_string)
-        logger.info("PostgreSQL connection pool initialized.")
+        logger.info("PostgreSQL connection pool initialized. PID: " + str(os.getpid()))
 
     @contextmanager
     def get_connection(self):

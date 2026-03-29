@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Query, Depends
 from openai import BaseModel
-import db
 from db.postgres_db_connection import PostgresConnection
 import os
 from dotenv import load_dotenv
@@ -20,8 +19,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-# Import the shared DB connection from main.py
-from main import db
+# Import the shared DB connection from db/connection.py
+from db.connection import db
 
 limiter = Limiter(key_func=lambda: "global")
 
